@@ -67,8 +67,8 @@ int main(int argc, char *argv[]){
 		dirfind(argv[1], argv[2]);
 		printf("viewed directories quantity: %d\nviewed files quantity: %d\n", dirnum, filnum);
 	}
-	else{
-		printf("incorrect format\n");
+	else {
+		fprintf(stderr, "incorrect format\n");
 		return 1;
 	}
 	return 0;
