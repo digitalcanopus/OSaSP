@@ -34,7 +34,7 @@ int main (int argc, char **argv){
 			break;
 		count++;
 		if (count == N){
-			getc(stdin);
+			printf("\n");
 			count = 0;
 		}
 	}
