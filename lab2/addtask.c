@@ -24,19 +24,21 @@ char* concat(char *s1, char *s2){
 void dirfind(char *directory, char *searchname){
 	DIR *dir;
 	struct dirent *ent;
+	struct stat buf = { 0 };
 	if (directory[strlen(directory) - 1] != '/')
 		directory = concat(directory, "/");
 	if ((dir = opendir(directory)) != NULL)
 		while ((ent = readdir(dir)) != NULL){
+			stat(concat(directory, ent->d_name), &buf);
 			if ((strcmp(ent->d_name, ".") != 0) && (strcmp(ent->d_name, ".."))){
 				if (opendir(concat(directory, ent->d_name)) != NULL){
 					dirnum++;
 					dirfind(concat(directory, ent->d_name), searchname);
 				}
-				else
+				else if (S_ISREG(buf.st_mode))
 					filnum++;
 			}
-			if (!strcmp(ent->d_name, searchname)){
+			if (!strcmp(ent->d_name, searchname) && (S_ISREG(buf.st_mode)){
 				printf("path: %s\n", directory);
 				printinfo(concat(directory, ent->d_name));
 			}
